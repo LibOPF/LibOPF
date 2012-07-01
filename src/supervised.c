@@ -288,7 +288,7 @@ accuracy (struct opf_graph *sg)
   memset(fn, 0, sizeof(int)*sg->label_n);
   memset(n,  0, sizeof(int)*sg->label_n);
 
-  double sum_e;
+  double sum_e = 0.0;
 
   for (i=0; i < sg->node_n; i++)
     {
