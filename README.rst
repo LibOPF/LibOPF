@@ -9,7 +9,9 @@ A short explanation about the method can be found in
 http://www.ic.unicamp.br/~afalcao/LibOPF. Please read the COPYRIGHT
 file before using LibOPF.
 
-For more information (building instructions and examples), see http://parati.dca.fee.unicamp.br/adesso/wiki/toolboxOPF/MainPage/view/
+For more information (building instructions and examples), see:
+
+http://www.adessowiki.org/wiki/toolboxOPF/view/
 
 For any questions and comments, please send your email to
 victormatheus@gmail, papa.joaopaulo@gmail.com or afalcao@ic.unicamp.br.
