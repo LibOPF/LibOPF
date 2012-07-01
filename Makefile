@@ -16,18 +16,7 @@ libopf: libopf-build
 libopf-build: \
 aux
 
-	$(CC) -fPIC -shared -o $(LIB)/libopf.so \
-$(OBJ)/common.o \
-$(OBJ)/set.o \
-$(OBJ)/realheap.o \
-$(OBJ)/linearalloc.o \
-$(OBJ)/metrics.o \
-$(OBJ)/measures.o \
-$(OBJ)/graph.o \
-$(OBJ)/knn.o \
-$(OBJ)/supervised.o \
-$(OBJ)/unsupervised.o
-
+	ar rcs $(LIB)/libopf.a $(OBJ)/*.o
 
 aux: $(SRC)/common.c $(SRC)/set.c $(SRC)/realheap.c $(SRC)/linearalloc.c  $(SRC)/metrics.c  $(SRC)/measures.c $(SRC)/graph.c $(SRC)/knn.c $(SRC)/supervised.c $(SRC)/unsupervised.c
 	$(CC) $(FLAGS) $(INCFLAGS) -c $(SRC)/common.c       -o $(OBJ)/common.o
@@ -50,4 +39,4 @@ cython:
 	cython libopf_py.pyx
 
 bindings:
-	$(CC) -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing $(INCFLAGS) -I/usr/include/python2.7 -lgomp -L$(LIB) -lopf -o $(LIB)/libopf_py.so libopf_py.c
+	$(CC) -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing $(INCFLAGS) -I/usr/include/python2.7 -fopenmp -o $(LIB)/libopf_py.so libopf_py.c $(LIB)/libopf.a
