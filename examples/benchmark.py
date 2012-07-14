@@ -11,22 +11,13 @@ from sklearn.metrics import classification_report,precision_score,recall_score,f
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.decomposition import PCA
 from sklearn import tree
+from skdata.diabetes import Diabetes
 
 
 def read_dataset():
-	data_file = csv.reader(open('robot.txt', 'rb'), delimiter=' ')
-	temp = data_file.next()
-	n_samples = int(temp[0])
-	n_features = int(temp[1])
-	data = np.empty((n_samples, n_features))
-	target = np.empty((n_samples,), dtype=np.float)
-	for i, ir in enumerate(data_file):
-	        data[i] = np.asarray(ir[:-1], dtype=np.float)
-		target[i] = np.asarray(ir[-1], dtype=np.int32)
-	pca = PCA()
-	pca.fit_transform(data)
-	#print pca.explained_variance_ratio_
-	benchmark(data,target,n_samples)
+	data = Diabetes()
+	X, y = data.classification_task()
+	benchmark(X,y,len(y))
 	
 def benchmark(data, target, n_samples):
 	list_n_samples = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
@@ -46,7 +37,7 @@ def benchmark(data, target, n_samples):
 		label_train, label_test = random_label[:n_split], random_label[n_split:]
 
 
-		def opf():
+		def _opf():
 			label_train_32 = label_train.astype(np.int32)
 			label_test_32  = label_test.astype(np.int32)
 			O = libopf_py.OPF()
@@ -94,7 +85,7 @@ def benchmark(data, target, n_samples):
 			linear_results[i,2] = f1_score(label_test, predicted)
 			gc.collect()
 
-		def sgd():
+		def _sgd():
 			clf = SGDClassifier(loss="hinge", penalty="l2")
 			t = time()
 			clf.fit(data_train, label_train)
@@ -116,11 +107,11 @@ def benchmark(data, target, n_samples):
 			tree_results[i,2] = f1_score(label_test, predicted)
 			gc.collect()
 			
-		opf()
+		_opf()
 		_svm()
 		_bayes()
 		_linear()
-		sgd()
+		_sgd()
 		_tree()
 		
 	pl.figure()
