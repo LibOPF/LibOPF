@@ -3,6 +3,24 @@ INCLUDE=./include
 SRC=./src
 OBJ=./obj
 
+# By default, build against "python", using "python-config" to query for
+# compilation options.  Override this by passing other values for
+# PYTHON and PYTHON_CONFIG when invoking "make" (or by modifying this
+# file).
+# Compile for python 3:
+#    make  PYTHON=python3  PYTHON_CONFIG=python3-config  bindings
+
+# The python interpreter to use:
+PYTHON=python
+# Modify for python 3:
+#    PYTHON=python3
+# The python-config executable to use:
+PYTHON_CONFIG=python-config
+# Modify for python 3:
+#    PYTHON_CONFIG=python3-config
+
+PYTHON_INCLUDES=$(shell $(PYTHON_CONFIG) --includes)
+
 CC=gcc
 
 FLAGS= -march=native -O3 -Wall -fPIC -fopenmp -D NTHREADS=4 -lgomp
@@ -39,4 +57,4 @@ cython:
 	cython libopf_py.pyx
 
 bindings:
-	$(CC) -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing $(INCFLAGS) -I/usr/include/python2.7 -fopenmp -o $(LIB)/libopf_py.so libopf_py.c $(LIB)/libopf.a
+	$(CC) -shared -pthread -fPIC -fwrapv -O2 -Wall -fno-strict-aliasing $(INCFLAGS) $(PYTHON_INCLUDES) -fopenmp -o $(LIB)/libopf_py.so libopf_py.c $(LIB)/libopf.a
