@@ -72,7 +72,7 @@ cdef class OPF:
           bint precomputed_distance=False, double split=0.8):
 
 
-      if Y != None:
+      if Y is not None:
         self.supervised = True
       else:
         self.supervised = False
@@ -83,7 +83,7 @@ cdef class OPF:
       self.feat_n = <int>X.shape[1]
       self.metric = metric
 
-      if Y != None and X.shape[0] != Y.shape[0]:
+      if Y is not None and X.shape[0] != Y.shape[0]:
         raise Exception("Shape mismatch")
 
       if self.precomputed_distance and X.shape[0] != X.shape[1]:
