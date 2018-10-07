@@ -1,4 +1,6 @@
-﻿LibOPF is a library of functions and programs for free usage in the
+THIS FORK OF LIBOPF IS UNMAINTAINED. Go to https://github.com/jppbsi/LibOPF for the latest version.
+
+LibOPF is a library of functions and programs for free usage in the
 design of optimum-path forest classifiers. This second version 
 contains some additional resources related to the supervised
 OPF classifier reported in reference [PapaIJIST09], and also
